@@ -156,16 +156,38 @@
                 padding: 10px;
             }
             .tab {
-                font-size: 18px;
-                padding: 8px 15px;
+                font-size: 15px; /* הקטנת גודל הכפתורים */
+                padding: 8px 10px;
+                width: 100%; /* הכפתורים תופסים את כל הרוחב */
             }
             .play-btn, .next-btn, .story-btn, .share-btn, .back-btn, .contact-btn {
-                font-size: 18px;
-                padding: 8px 15px;
+                font-size: 15px; /* הקטנת גודל הפונט בכפתורים */
+                padding: 8px 10px;
+                width: 100%; /* הכפתורים תופסים את כל הרוחב */
+                margin-left: 0; /* ביטול מרווח מיותר */
+                margin-bottom: 0px; /* רווח בין כפתורים */
             }
-		/* הגדרת הגופן Heebo רק לכותרת ותיאור הסיפור בתצוגת הסיפור */
-        .story-title, .story-description {
-        font-family: 'Heebo', sans-serif;
+            .header img {
+                width: 100px; /* תמונת הרב קטנה יותר במסכים קטנים */
+            }
+            .story-title, .story-description {
+                font-size: 15px; /* הקטנת גודל הטקסט בתצוגת הסיפור */
+                padding: 10px; /* פחות רווח מסביב לטקסט */
+            }
+            input[type="text"], textarea {
+                width: 100%; /* שדות טקסט תופסים את כל הרוחב */
+                padding: 8px; /* ריווח מתאים למסכים קטנים */
+                font-size: 14px; /* הקטנת גודל הפונט בשדות */
+            }
+            .logo-container {
+                margin-top: 10px; /* הפחתת המרווח למעלה */
+            }
+            .logo {
+                max-width: 100px; /* הקטנת גודל הלוגו במסכים קטנים */
+            }
+            .bsod {
+                font-size: 12px; /* הקטנת גודל הטקסט של בס"ד במסכים קטנים */
+            }
         }
     }
     </style>
