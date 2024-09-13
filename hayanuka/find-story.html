@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="he">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Rubik+Doodle&display=swap" rel="stylesheet">
+    <title>מצא סיפור</title>
+
+    <!-- iframe לניגון המוזיקה -->
+    <iframe src="music.html" style="display:none;" id="musicFrame"></iframe>
+
+    <style>
+        body {
+            font-family: 'Rubik Doodle', cursive; /* סגנון הכתב */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            direction: rtl;
+            background: url('Back.png') no-repeat center center fixed;
+            background-size: cover;
+        }
+        .container {
+            width: 90%;
+            max-width: 1000px;
+            text-align: center;
+            border-radius: 20px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+            overflow: hidden;
+            background: url('House.png') no-repeat center center;
+            background-size: cover;
+            color: white;
+            font-size: 25px; 
+            font-weight: bold;
+        }
+        .header img {
+            width: 150px;
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(0,0,0,0.25);
+        }
+        .header h1 {
+            margin-top: 10px;
+        }
+        input[type="text"] {
+            width: 80%;
+            padding: 10px;
+            margin-top: 20px;
+            border-radius: 10px;
+            border: 1px solid #ccc;
+            font-size: 20px;
+        }
+        .buttons-container {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px;
+        }
+        .search-btn, .home-btn {
+            padding: 10px 20px;
+            width: 45%; /* שניהם יתפסו את אותו רוחב */
+            height: 50px; /* גובה קבוע */
+            font-size: 25px; /* גודל קבוע */
+            background-color: rgba(0, 0, 0, 0.5); /* צבע רקע זהה לשני הכפתורים */
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            cursor: pointer;
+            text-align: center;
+            transition: background-color 0.3s, color 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Rubik Doodle', cursive; /* סגנון הכתב */
+            font-weight: bold; 
+        }
+        .search-btn:hover, .home-btn:hover {
+            background-color: rgba(0, 0, 0, 0.7); 
+        }
+
+        /* התאמה לתגית a שתתנהג כמו כפתור */
+        .home-btn {
+            display: inline-block; /* מוודא שהכפתור יתנהג כמו inline-block */
+            box-sizing: border-box; /* מוודא שהרוחב והגובה יכללו את הפדינג */
+        }
+
+        /* התאמה לרוחב קטן יותר (מובייל) */
+        @media (max-width: 768px) {
+            .buttons-container {
+                flex-direction: column;
+            }
+            .search-btn, .home-btn {
+                width: 100%; 
+                margin-bottom: 10px;
+            }
+        }
+    </style>
+    <script>
+        function searchStory() {
+            const query = document.querySelector('input[name="search"]').value;
+            window.location.href = `story-list.html?search=${encodeURIComponent(query)}`;
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <img src="hayanuka.jpeg" alt="תמונת הרב">
+            <h1>מצא סיפור</h1>
+        </div>
+        <input type="text" name="search" placeholder="אנא רשום כאן את הסיפור או נס שברצונך לראות">
+        <div class="buttons-container">
+            <button class="search-btn" onclick="searchStory()">חפש</button>
+            <a href="index.html" class="home-btn">חזרה לדף הבית</a>
+        </div>
+    </div>
+</body>
+</html>

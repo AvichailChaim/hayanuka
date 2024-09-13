@@ -1,0 +1,135 @@
+﻿<!DOCTYPE html>
+<html lang="he">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>רשימת סיפורים</title>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik+Doodle&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Rubik Doodle', cursive;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            direction: rtl;
+            background: url('Back.png') no-repeat center center fixed;
+            background-size: cover;
+        }
+        .container {
+            width: 90%;
+            max-width: 1000px;
+            text-align: center;
+            border-radius: 20px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+            overflow: hidden;
+            background: url('House.png') no-repeat center center;
+            background-size: cover;
+            color: white;
+            padding: 20px;
+            font-size: 25px;
+        }
+        .header img {
+            width: 150px;
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(0,0,0,0.25);
+        }
+        h1 {
+            font-size: 40px;
+            margin-bottom: 20px;
+        }
+        .menu {
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            font-size: 22px;
+        }
+        .menu a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            background-color: rgba(0, 0, 0, 0.5);
+            border-radius: 30px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .menu a:hover {
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+        .story-list {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            max-height: 200px;
+            overflow-y: auto;
+            margin-top: 20px;
+        }
+        .story-item {
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            color: white;
+            font-size: 25px;
+            text-decoration: none;
+        }
+        .story-item:hover {
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+        .home-link {
+            margin-top: 20px;
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+            transition: background-color 0.3s, color 0.3s;
+            font-size: 25px;
+        }
+        .home-link:hover {
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+    </style>
+    <script>
+        function filterStories() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const searchTerm = urlParams.get('search');
+            if (searchTerm) {
+                const stories = document.querySelectorAll('.story-item');
+                stories.forEach(story => {
+                    if (!story.textContent.includes(searchTerm)) {
+                        story.style.display = 'none';
+                    }
+                });
+            }
+        }
+        window.onload = filterStories;
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>רשימת סיפורים</h1>
+        <div class="menu">
+            <a href="index.html">דף הבית</a>
+            <a href="find-story.html">מצא סיפור</a>
+            <a href="story-list.html">רשימת סיפורים</a>
+            <a href="share-story.html">שתף סיפור</a>
+        </div>
+        <div class="header">
+            <img src="hayanuka.jpeg" alt="תמונת הרב">
+        </div>
+        <div class="story-list">
+            <a href="story-view.html" class="story-item">תיאור סיפור 1</a>
+            <a href="story-view.html" class="story-item">תיאור סיפור 2</a>
+            <a href="story-view.html" class="story-item">נס לאחר ביקור אצל הרב</a>
+            <a href="story-view.html" class="story-item">תיאור סיפור 4</a>
+            <a href="story-view.html" class="story-item">תיאור סיפור 5</a>
+            <a href="story-view.html" class="story-item">תיאור סיפור 6</a>
+        </div>
+        <a href="index.html" class="home-link">חזרה לדף הבית</a>
+    </div>
+</body>
+</html>

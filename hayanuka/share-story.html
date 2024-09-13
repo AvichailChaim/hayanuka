@@ -1,0 +1,126 @@
+﻿<!DOCTYPE html>
+<html lang="he">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Rubik+Doodle&display=swap" rel="stylesheet">
+    <title>שתף סיפור</title>
+    <style>
+        body {
+            font-family: 'Rubik Doodle', cursive; /* סגנון הכתב */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            direction: rtl;
+            background: url('Back.png') no-repeat center center fixed;
+            background-size: cover;
+        }
+        .container {
+            width: 90%;
+            max-width: 1000px;
+            text-align: center;
+            border-radius: 20px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+            overflow: hidden;
+            background: url('House.png') no-repeat center center;
+            background-size: cover;
+            color: white;
+            font-size: 25px; 
+            font-weight: bold; 
+        }
+        .header img {
+            width: 150px;
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(0,0,0,0.25);
+        }
+        .header h1 {
+            margin-top: 10px;
+        }
+        input[type="text"], textarea {
+            width: 80%;
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 30px;
+            border: 1px solid #ccc;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        textarea {
+            height: 150px;
+        }
+        .buttons-container {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px;
+        }
+        .submit-btn, .home-btn {
+            padding: 10px 20px;
+            width: 45%; /* שניהם יתפסו את אותו רוחב */
+            height: 50px; /* גובה קבוע */
+            font-size: 25px; /* גודל קבוע */
+            background-color: rgba(0, 0, 0, 0.5); /* צבע רקע זהה לשני הכפתורים */
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            cursor: pointer;
+            text-align: center;
+            transition: background-color 0.3s, color 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Rubik Doodle', cursive; /* סגנון הכתב */
+			font-weight: bold; 
+        }
+        .submit-btn:hover, .home-btn:hover {
+            background-color: rgba(0, 0, 0, 0.7); 
+        }
+
+        /* התאמה לתגית a שתתנהג כמו כפתור */
+        .home-btn {
+            display: inline-block; /* מוודא שהכפתור יתנהג כמו inline-block */
+            box-sizing: border-box; /* מוודא שהרוחב והגובה יכללו את הפדינג */
+        }
+
+        /* התאמה לרוחב קטן יותר (מובייל) */
+        @media (max-width: 768px) {
+            .buttons-container {
+                flex-direction: column;
+            }
+            .submit-btn, .home-btn {
+                width: 100%; 
+                margin-bottom: 10px;
+            }
+        }
+    </style>
+    <script>
+        function sendStory() {
+            const name = document.querySelector('input[name="name"]').value;
+            const summary = document.querySelector('input[name="summary"]').value;
+            const story = document.querySelector('textarea[name="story"]').value;
+            const emailBody = `שם: ${name}%0D%0Aתיאור: ${summary}%0D%0Aסיפור:%0D%0A${story}`;
+            window.location.href = `https://mail.google.com/mail/?view=cm&fs=1&to=zickuyharabim@gmail.com&su=סיפור חדש&body=${emailBody}`;
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <img src="hayanuka.jpeg" alt="תמונת הרב">
+            <h1>שתף סיפור</h1>
+        </div>
+        <form onsubmit="event.preventDefault(); sendStory();">
+            <input type="text" name="name" placeholder="שמך (לא חובה)">
+            <input type="text" name="summary" placeholder="תיאור בקצרה">
+            <textarea name="story" placeholder="סיפור/טקסט"></textarea>
+            <div class="buttons-container">
+                <button type="submit" class="submit-btn">שלח סיפור לאישור</button>
+                <a href="index.html" class="home-btn">חזרה לדף הבית</a>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

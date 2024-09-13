@@ -1,0 +1,297 @@
+﻿<!DOCTYPE html>
+<html lang="he">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Rubik+Doodle&display=swap" rel="stylesheet">
+    <title>הינוקא הקדוש - מערכת סיפור</title>
+    <style>
+        body {
+            font-family: 'Rubik Doodle', cursive;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            direction: rtl;
+            background: url('Back.png') no-repeat center center fixed;
+            background-size: cover;
+        }
+        .container {
+            width: 90%;
+            max-width: 1000px;
+            text-align: center;
+            border-radius: 20px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+            overflow: hidden;
+            background: url('House.png') no-repeat center center;
+            background-size: cover;
+            color: white;
+            font-size: 25px;
+            font-weight: bold;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        .tabs {
+            display: flex;
+            justify-content: space-around;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 10px;
+            border-radius: 20px;
+        }
+        .tab {
+            padding: 10px 20px;
+            color: white;
+            cursor: pointer;
+            background-color: rgba(0, 0, 0, 0.3);
+            border-radius: 30px;
+            transition: background-color 0.3s, color 0.3s;
+            border: 2px solid #d4af37; /* צבע מוזהב */
+        }
+        .tab:hover {
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+        .tab-content {
+            display: none;
+            margin-top: 20px;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        .header img {
+            width: 250px;
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(0,0,0,0.25);
+        }
+        .play-btn, .next-btn, .story-btn, .share-btn, .back-btn {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 25px;
+            font-weight: bold;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            border-radius: 30px;
+            border: 2px solid #d4af37; /* צבע מוזהב */
+            cursor: pointer;
+            margin-left: 10px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .play-btn:hover, .next-btn:hover, .story-btn:hover, .share-btn:hover, .back-btn:hover {
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+
+        .story-item {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 25px;
+            font-weight: bold;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            border-radius: 30px;
+            border: 2px solid #d4af37; /* צבע מוזהב */
+            cursor: pointer;
+            margin-left: 10px;
+            transition: background-color 0.3s, color 0.3s;
+            text-align: center;
+        }
+
+        input[type="text"], textarea {
+            width: 80%;
+            padding: 15px;
+            font-size: 20px;
+            border-radius: 30px;
+            border: none;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            margin: 15px 0;
+            text-align: center;
+            box-sizing: border-box;
+        }
+        input[type="text"]::placeholder, textarea::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+        textarea {
+            height: 150px;
+            resize: none;
+        }
+
+        audio {
+            display: none;
+        }
+
+        /* כיתוב בס"ד */
+        .bsod {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 20px;
+            color: white;
+        }
+
+        /* עיצוב תצוגת הסיפור */
+        .story-title {
+            font-size: 30px;
+            margin-bottom: 20px;
+        }
+        .story-description {
+            font-size: 20px;
+            margin-bottom: 40px;
+        }
+		/* רספונסיביות */
+        @media (max-width: 768px) {
+            .container {
+                width: 100%;
+                padding: 10px;
+            }
+            .tab {
+                font-size: 18px;
+                padding: 8px 15px;
+            }
+            .play-btn, .next-btn, .story-btn, .share-btn, .back-btn, .contact-btn {
+                font-size: 18px;
+                padding: 8px 15px;
+            }
+        }
+    </style>
+    <script>
+        // פונקציה להצגת טאב
+        function showTab(tabIndex) {
+            var contents = document.querySelectorAll('.tab-content');
+            contents.forEach(function(content, index) {
+                content.classList.remove('active');
+                if (index === tabIndex) {
+                    content.classList.add('active');
+                }
+            });
+        }
+
+        // רשימת הסיפורים - מגיע מתוך התוכן של "רשימת סיפורים"
+        function searchStory() {
+        const query = document.querySelector('input[name="search"]').value.toLowerCase();
+        const stories = document.querySelectorAll('.story-item');
+        const resultsContainer = document.querySelector('.story-list');
+        resultsContainer.innerHTML = ''; // ננקה את התוצאות הקודמות
+
+        let found = false;
+        stories.forEach(story => {
+        const title = story.innerText.toLowerCase();
+        const description = story.getAttribute('data-description').toLowerCase(); // קבלת התיאור
+
+        // בדיקה אם החיפוש תואם לכותרת או לתיאור
+        if (title.includes(query) || description.includes(query)) {
+            const clone = story.cloneNode(true);
+            resultsContainer.appendChild(clone);
+            found = true;
+        }
+    });
+
+    if (!found) {
+        resultsContainer.innerHTML = 'לא נמצאו תוצאות.';
+    }
+}
+
+        // ניגון מוזיקה
+        let currentTrack = 1;
+
+        function playMusic() {
+            const audio = document.getElementById('backgroundMusic');
+            audio.src = `music${currentTrack}.mp3`; // הגדרת השיר הנוכחי
+            audio.play();
+        }
+
+        function nextTrack() {
+            currentTrack++;
+            const audio = document.getElementById('backgroundMusic');
+            audio.src = `music${currentTrack}.mp3`;
+            audio.play();
+        }
+
+        // הצגת סיפור בתוך אותו דף
+        function viewStory(storyTitle, storyDescription) {
+            document.querySelector('.story-title').innerText = storyTitle;
+            document.querySelector('.story-description').innerText = storyDescription;
+            showTab(4); // מעבר לטאב תצוגת הסיפור
+        }
+
+        function sendStory() {
+            const name = document.querySelector('input[name="name"]').value;
+            const summary = document.querySelector('input[name="summary"]').value;
+            const story = document.querySelector('textarea[name="story"]').value;
+
+            if (name && summary && story) {
+                const bodyContent = `שם: ${name}%0D%0Aתיאור: ${summary}%0D%0Aסיפור:%0D%0A${story}`;
+                const mailtoLink = `https://mail.google.com/mail/?view=cm&fs=1&to=zickuyharabim@gmail.com&su=סיפור חדש&body=${bodyContent}`;
+                window.open(mailtoLink, '_blank');
+            } else {
+                alert('אנא מלא את כל השדות כדי לשלוח את הסיפור.');
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="bsod">בס"ד</div>
+        <div class="tabs">
+            <div class="tab" onclick="showTab(0)">דף הבית</div>
+            <div class="tab" onclick="showTab(1)">מצא סיפור</div>
+            <div class="tab" onclick="showTab(2)">רשימת סיפורים</div>
+            <div class="tab" onclick="showTab(3)">שתף סיפור</div>
+        </div>
+
+        <!-- דף הבית -->
+        <div class="tab-content active">
+            <h1>הינוקא הקדוש</h1>
+            <div class="header">
+                <img src="hayanuka.jpeg" alt="תמונת הרב">
+            </div>
+            <button class="play-btn" onclick="playMusic()">לחץ כאן - כדי להפעיל ניגונים של הינוקא</button>
+            <button class="next-btn" onclick="nextTrack()">עבור מנגינה</button>
+			<button class="play-btn" onclick="showTab(5)">יצירת קשר</button>
+			
+            <audio id="backgroundMusic"></audio>
+        </div>
+
+        <!-- מצא סיפור -->
+        <div class="tab-content">
+            <h1>מצא סיפור</h1>
+            <input type="text" name="search" placeholder="אנא רשום כאן את הסיפור או נס שברצונך לראות">
+            <button class="story-btn" onclick="searchStory()">חפש</button>
+            <div class="story-list"></div>
+        </div>
+
+        <!-- רשימת סיפורים -->
+        <div class="tab-content">
+            <h1>רשימת סיפורים</h1>
+            <div class="story-list">
+                <div class="story-item" data-description="נס מדהים על חזרה לחיים לאחר תאונה קשה" onclick="viewStory('נס החזרה לחיים', 'נס מדהים על חזרה לחיים לאחר תאונה קשה')">נס החזרה לחיים</div>
+                <div class="story-item" data-description="סיפור על הישועה המופלאה שהגיעה במפתיע" onclick="viewStory('סיפור הישועה', 'סיפור על הישועה המופלאה שהגיעה במפתיע')">סיפור הישועה</div>
+                <div class="story-item" data-description="הגעתי לקבלת קהל ביום שני" onclick="viewStory('פגישה עם הרב', 'הגעתי לקבלת קהל ביום שני')">פגישה עם הרב</div>
+
+            </div>
+        </div>
+
+        <!-- שתף סיפור -->
+        <div class="tab-content">
+            <h1>שתף סיפור</h1>
+            <input type="text" name="name" placeholder="שמך (לא חובה)">
+            <input type="text" name="summary" placeholder="תיאור בקצרה">
+            <textarea name="story" placeholder="סיפור/טקסט"></textarea>
+            <button class="share-btn" onclick="sendStory()">שלח סיפור לאישור</button>
+        </div>
+
+        <!-- תצוגת סיפור -->
+        <div class="tab-content">
+            <h1 class="story-title">כותרת הסיפור</h1>
+            <p class="story-description">תיאור הסיפור...</p>
+            <button class="back-btn" onclick="showTab(2)">חזרה לרשימת הסיפורים</button>
+        </div>
+		<!-- יצירת קשר - מנותק מסיפורים -->
+        <div class="tab-content">
+        <h1>יצירת קשר</h1>
+        <p>שם: אביחיל חיים דוויק</p>
+        <p>מייל: <a href="mailto:zickuyharabim@gmail.com">zickuyharabim@gmail.com</a></p>
+        </div>
+    </div>
+</body>
+</html>

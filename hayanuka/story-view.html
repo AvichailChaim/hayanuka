@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="he">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Rubik+Doodle&display=swap" rel="stylesheet">
+    <title>תצוגת סיפור</title>
+    <style>
+        body {
+            font-family: 'Rubik Doodle', cursive;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            direction: rtl;
+            background: url('Back.png') no-repeat center center fixed;
+            background-size: cover;
+        }
+        .container {
+            width: 90%;
+            max-width: 1000px;
+            text-align: center;
+            border-radius: 20px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+            overflow: hidden;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        .story-title {
+            font-size: 30px;
+            margin-bottom: 20px;
+        }
+        .story-description {
+            font-size: 20px;
+            margin-bottom: 40px;
+        }
+        .home-link {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 20px;
+            font-weight: bold;
+            background-color: rgba(255, 255, 255, 0.3);
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .home-link:hover {
+            background-color: rgba(255, 255, 255, 0.7);
+            color: black;
+        }
+
+        /* כיתוב בס"ד */
+        .bsod {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 10px;
+            color: white;
+        }
+    </style>
+    <script>
+        window.onload = function() {
+            // קבלת הפרמטרים מה-URL
+            const params = new URLSearchParams(window.location.search);
+            const title = params.get('title');
+            const description = params.get('description');
+
+            // הצגת הכותרת והתיאור של הסיפור
+            document.querySelector('.story-title').innerText = title;
+            document.querySelector('.story-description').innerText = description;
+
+            // בדיקת מצב הניגון והמשך הניגון אם היה פעיל
+            const currentTrack = localStorage.getItem('currentTrack');
+            const isPlaying = localStorage.getItem('isPlaying') === 'true';
+
+            if (isPlaying) {
+                const audio = document.getElementById('backgroundMusic');
+                audio.src = `music${currentTrack}.mp3`;
+                audio.play();
+            }
+        };
+    </script>
+</head>
+<body>
+    <div class="bsod">בס"ד</div>
+    <div class="container">
+        <h1 class="story-title">כותרת הסיפור</h1>
+        <p class="story-description">תיאור הסיפור...</p>
+        <a href="index.html" class="home-link">חזרה לדף הבית</a>
+    </div>
+    <audio id="backgroundMusic" style="display: none;"></audio>
+</body>
+</html>
