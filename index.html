@@ -267,7 +267,7 @@
             showTab(4); // מעבר לטאב תצוגת הסיפור
         }
 
-        function sendStory() {
+function sendStory() {
     const name = document.querySelector('input[name="name"]').value;
     const summary = document.querySelector('input[name="summary"]').value;
     const story = document.querySelector('textarea[name="story"]').value;
@@ -276,9 +276,19 @@
         const subject = encodeURIComponent('סיפור חדש'); // נושא המייל
         const bodyContent = `שם: ${name}\nתיאור: ${summary}\nסיפור:\n${story}`; // תוכן המייל
         const body = encodeURIComponent(bodyContent); // קידוד URL לתוכן
-        const mailtoLink = `mailto:zickuyharabim@gmail.com?subject=${subject}&body=${body}`;
-        
-        window.location.href = mailtoLink; // מפעיל את אפליקציית המייל
+
+        // זיהוי אם מדובר במכשיר נייד
+        const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
+        if (isMobile) {
+            // פותח את אפליקציית המייל במכשיר נייד
+            const mailtoLink = `mailto:zickuyharabim@gmail.com?subject=${subject}&body=${body}`;
+            window.location.href = mailtoLink;
+        } else {
+            // פותח את Gmail בדפדפן במחשב
+            const gmailLink = `https://mail.google.com/mail/?view=cm&fs=1&to=zickuyharabim@gmail.com&su=${subject}&body=${body}`;
+            window.open(gmailLink, '_blank');
+        }
     } else {
         alert('אנא מלא את כל השדות כדי לשלוח את הסיפור.');
     }
